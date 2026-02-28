@@ -9,6 +9,8 @@ This project is a FastAPI microservice that implements an identity graph reconci
 4. **Relational Consistency**: Transactional guarantees to ensure the graph graph always results in clean relational links without dangling or cyclic dependencies.
 
 ## Architecture & Stack
+The service runs database migrations automatically during container startup using Alembic and connects via environment-injected `DATABASE_URL` to Render's internal PostgreSQL instance.
+
 - **FastAPI**: Asynchronous web framework for handling API requests.
 - **PostgreSQL**: Relational database.
 - **SQLAlchemy (ORM)**: For database modeling and querying.

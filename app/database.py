@@ -5,13 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# We default to docker postgres credentials if not explicitly set
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://bitspeed:password@127.0.0.1:5433/identity_db"
-)
+# We require DATABASE_URL for production
+DATABASE_URL = os.environ["DATABASE_URL"]
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
