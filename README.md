@@ -93,4 +93,25 @@ Consolidate or create a contact identity.
 ## Example Scenarios
 - **Case 1: No match found**: Creates a new primary contact.
 - **Case 2: Match found**: Consolidates the cluster. If the payload contains a new phone/email, it creates a new secondary contact linking to the oldest primary.
-- **Case 3: Two primaries merge**: A payload matches the email of Primary A and the phone of Primary B. The system links them. The newer Primary becomes a Secondary, adjusting its previous secondaries to the oldest Primary's ID.
+## Deployment to Render
+
+This project includes a `Dockerfile` and is fully configured to be deployed on Render.com.
+
+### Steps to Deploy:
+1. Push this repository to GitHub.
+2. Log into [Render.com](https://render.com) and create a new **PostgreSQL** database service.
+   - Copy the "Internal Database URL" (it looks like `postgres://user:password@host:5432/dbname`).
+3. Click "New +" and select **Web Service**.
+4. Connect your GitHub repository.
+5. In the Build and Deploy settings:
+   - **Environment**: Docker
+   - **Region**: (Choose the same region as your Database)
+   - **Branch**: main
+6. Scroll down to **Advanced** and add an Environment Variable:
+   - **Key**: `DATABASE_URL`
+   - **Value**: (Paste the Render Internal Database URL from Step 2)
+7. Click **Create Web Service**.
+
+When the server deploys, the `Dockerfile` will automatically run the `alembic upgrade head` command to create your database tables before starting Uvicorn.
+
+Your API endpoint will then be available at: `https://<your-app-name>.onrender.com/identify`
