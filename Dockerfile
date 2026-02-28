@@ -20,4 +20,4 @@ COPY . .
 EXPOSE 8000
 
 # Start script that runs migrations and then starts the app
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port $PORT"]
